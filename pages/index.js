@@ -63,7 +63,7 @@ const Home = () => {
 
     <Section delay={0.1}>
       <Heading as="h3" variant="section-title">
-        Work
+        Work 💻
       </Heading>
       <Paragraph>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis, 
