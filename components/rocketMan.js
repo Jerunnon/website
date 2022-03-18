@@ -41,6 +41,8 @@ const RocketMan = () => {
       renderer.setSize(scW, scH);
       renderer.outputEncoding = THREE.sRGBEncoding;
       container.appendChild(renderer.domElement);
+      renderer.shadowMap.enabled = true,
+      renderer.shadowMap.type = THREE.PCFShadowMap;
       setRenderer(renderer);
 
       const scale = scH * 0.005 + 4.8
@@ -56,8 +58,19 @@ const RocketMan = () => {
       camera.lookAt(target);
       setCamera(camera);
 
-      const ambientLight = new THREE.AmbientLight(0xcccccc, 1);
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
       scene.add(ambientLight);
+
+      const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5, 100 );
+      directionalLight.position.set(0, 0, 1)
+      directionalLight.castShadow = true;
+      scene.add( directionalLight );
+
+      directionalLight.shadow.mapSize.width = 512; // default
+      directionalLight.shadow.mapSize.height = 512; // default
+      directionalLight.shadow.camera.near = 0.5; // default
+      directionalLight.shadow.camera.far = 500; // default
+      
 
       const controls = new OrbitControls(camera, renderer.domElement)
       controls.autoRotate = true
@@ -65,8 +78,8 @@ const RocketMan = () => {
       setControls(controls);
 
       loadGLTFModel(scene, '/rocketMan.glb', {
-        recieveShadow: false,
-        castShadow: false
+        recieveShadow: true,
+        castShadow: true
       }).then(() => {
         animate()
         setLoading(false);
