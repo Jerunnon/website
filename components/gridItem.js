@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { Box, Text, LinkBox, LinkOverlay } from '@chakra-ui/react'
 import { Global } from '@emotion/react'
 
-export const GriItem = ({ children, href, title, thumbnail }) => (
+export const GridItem = ({ children, href, title, thumbnail }) => (
     <Box w="100%" textAlign="center" >
         <LinkBox cursor="pointer">
             <Image src={thumbnail} alt={title} className="gridItem-thumbnail" loading="lazy" />
