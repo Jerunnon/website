@@ -22,7 +22,7 @@ const LogoBox = styled.span`
 `
 
 const Logo = () => {
-    const Image = ``
+    const Image = "/images/Rocketbelt.png"
 
     return (
         <Link href='/' className='Link'>
