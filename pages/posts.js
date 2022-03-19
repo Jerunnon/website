@@ -9,12 +9,13 @@ function Posts({ articles }) {
     return (
         <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" >
             <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" >
-                {articles.map((article) => {
+                {articles.length = 2 && articles.map((article) => {
                     <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" key={article.id}>
                         <Heading as="h3">{article.title}</Heading>
                         <Box w="300px" h="300px" borderRadius="10px" my={4} >
                             <Image width="100%" height="100%" src={article.cover_image} />
                         </Box>
+                        <Paragraph>Lesezeit: {article.reading_time_minutes} Minuten</Paragraph>
                         <Paragraph>
                            {article.description}
                         </Paragraph>
