@@ -1,47 +1,57 @@
-import { Box, Heading } from '@chakra-ui/react'
-import Image from 'next/image'
-import { useState } from 'react'
+import { Heading, Container, SimpleGrid } from '@chakra-ui/react'
 
 import Paragraph from '../components/paragraph'
+import Layout from '../components/layouts/article'
+import Section from '../components/section'
+import { GridItem } from '../components/gridItem'
 
 function Posts({ articles }) {
 
     return (
-        <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" >
-            <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" >
-                {articles.length = 2 && articles.map((article) => {
-                    <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" key={article.id}>
-                        <Heading as="h3">{article.title}</Heading>
-                        <Box w="300px" h="300px" borderRadius="10px" my={4} >
-                            <Image width="100%" height="100%" src={article.cover_image} />
-                        </Box>
-                        <Paragraph>Lesezeit: {article.reading_time_minutes} Minuten</Paragraph>
-                        <Paragraph>
-                           {article.description}
-                        </Paragraph>
-                    </Box>
+        <Layout>
+            <Container>
+                <Heading as="h3" fontSize={20} mb={4}>neueste Posts</Heading>
+                {articles.map((article) => {
+                    return (
+                        <Section delay={0.1}>
+                            <SimpleGrid columns={[1, 2, 2]} gap={6} >
+                                <GridItem
+                                    title={article.title}
+                                    thumbnail={article.cover_image}
+                                    href={article.url}
+                                >
+                                <Paragraph>{article.description}</Paragraph>
+                                </GridItem>
+                            </SimpleGrid>
+                        </Section>
+                    )
                 })}
-            </Box>
-        </Box>
+            </Container>
+        </Layout>
     )
 
 }
 
 export async function getServerSideProps({ req }) {
-    const res = await fetch('https://dev.to/api/articles?username=simonklein/published', {
-        method: "GET",
-        headers: {
-            "X-Auth-Token": process.env.DEV_API_KEY
-        }
-    })
-    const articles = await res.json()
 
-    return {
-        props: {
-            articles,
-            cookies: req.headers.cookies ?? ''
+    try {
+        const res = await fetch('https://dev.to/api/articles/me/published', {
+            method: "GET",
+            headers: {
+                "api-key": process.env.DEV_API_KEY
+            }
+        })
+        const articles = await res.json()
+        return {
+            props: {
+                articles,
+                cookies: req.headers.cookies ?? ''
+            }
         }
+    } catch (error) {
+        console.log(error)
     }
+   
 }
 
 export default Posts;
