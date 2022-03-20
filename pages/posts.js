@@ -13,14 +13,14 @@ function Posts({ articles }) {
                 <Heading as="h3" fontSize={20} mb={4}>neueste Posts</Heading>
                 {articles.map((article) => {
                     return (
-                        <Section delay={0.1}>
-                            <SimpleGrid columns={[1, 2, 2]} gap={6} >
-                                <GridItem
+                        <Section delay={0.1} key={article.length}>
+                            <SimpleGrid columns={[1, 2, 2]} gap={6} key={article.id}>
+                                <GridItem key={article.title}
                                     title={article.title}
                                     thumbnail={article.cover_image}
                                     href={article.url}
                                 >
-                                <Paragraph>{article.description}</Paragraph>
+                                {article.description}
                                 </GridItem>
                             </SimpleGrid>
                         </Section>
