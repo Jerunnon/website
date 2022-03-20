@@ -16,7 +16,7 @@ const RocketMan = () => {
   const [ renderer, setRenderer ] = useState();
   const [ _camera, setCamera ] = useState();
   const [ target ]= useState(new THREE.Vector3(-0.5, 1.2, 0));
-  const [ initialCameraPosition ] = useState(new THREE.Vector3(20 * Math.sin(0.2 * Math.PI), 10, 20 * Math.cos(0.2 * Math.PI)));
+  const [ initialCameraPosition ] = useState(new THREE.Vector3(20 * Math.sin(0.2 * Math.PI), 20, 20 * Math.cos(0.2 * Math.PI)));
   const [ scene ] = useState(new THREE.Scene());
   const [ _controls, setControls ] = useState();
 
@@ -55,13 +55,15 @@ const RocketMan = () => {
         50000
       );
       camera.position.copy(initialCameraPosition);
+      camera.zoom = 4
+      camera.updateProjectionMatrix();
       camera.lookAt(target);
       setCamera(camera);
 
-      const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+      const ambientLight = new THREE.AmbientLight(0xcccccc, 0.6);
       scene.add(ambientLight);
 
-      const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5, 100 );
+      const directionalLight = new THREE.DirectionalLight( 0xccccccc, 1);
       directionalLight.position.set(0, 1, 0)
       directionalLight.castShadow = true;
       scene.add( directionalLight );
@@ -96,10 +98,11 @@ const RocketMan = () => {
           const rootSpeed = -easeOutCirc(frame / 120 ) * Math.PI * 20
           
           camera.position.y = 10
-          camera.position.x = 
-          p.x * Math.cos(rootSpeed) * p.z * Math.sin(rootSpeed)
-          camera.position.z = 
-          p.z * Math.cos(rootSpeed) * p.x * Math.sin(rootSpeed)
+          camera.position.x = -20
+          /* p.x * Math.cos(rootSpeed) * p.z * Math.sin(rootSpeed) */
+          camera.position.z = 40
+          /* p.z * Math.cos(rootSpeed) * p.x * Math.sin(rootSpeed) */
+          
           camera.lookAt(target)
         } else {
           controls.update();
