@@ -6,7 +6,7 @@ import { Global } from '@emotion/react'
 export const GridItem = ({ children, href, title, thumbnail }) => (
     <Box w="100%" textAlign="center" >
         <LinkBox cursor="pointer">
-            <Image src={thumbnail} alt={title} className="gridItem-thumbnail" loading="lazy" />
+            <Image src={thumbnail} alt={title} className="grid-item-thumbnail" loading="lazy" width="267px" height="177px" />
             <LinkOverlay>
                 <Text mt={2}>{title}</Text>
             </LinkOverlay>
@@ -16,11 +16,11 @@ export const GridItem = ({ children, href, title, thumbnail }) => (
 );
 
 export const GridItemStyle = () => (
-    <Global
-      styles={`
-        .grid-item-thumbnail {
-          border-radius: 12px;
-        }
-      `}
-    />
-  );
+  <Global
+    styles={`
+      .grid-item-thumbnail {
+        border-radius: 12px;
+      }
+    `}
+  />
+)
