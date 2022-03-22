@@ -1,36 +1,141 @@
+import { Formik, Form, Field } from 'formik'
+import SendIcon from './layouts/sendIcon'
+
 import {
     Box,
     FormControl,
     FormLabel,
     FormHelperText,
     FormErrorMessage,
-    Input
+    Input,
+    Button,
+    Heading,
+    Container,
+    ButtonGroup,
+    useColorModeValue,
+    border
 } from '@chakra-ui/react'
 
-function Form () {
 
+function FormikExample() {
+    function validateName(value) {
+        let error
+        if (!value) {
+          error = 'Name is required'
+        } 
+        return error;
+      }
+  
+      function validateEmail(value) {
+          let error 
+          if (!value.email) {
+  
+              error = 'Required';
+         
+            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value.email)) {
+         
+              error = 'Invalid email address';
+         
+            }
+
+            return error;
+      }
+
+      function validatePhone(value) {
+          let error
+        if(value.phone) {
+            const regPhone = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g.test(value.phone)
+            if (!regPhone) {
+                error = 'Invalid Phone Number'
+            }
+        }
+
+        return error;
+    }
+
+    function validateText(value) {
+        let error
+        if (!value.text) {
+            error = 'Required'
+        }
+
+        return error;
+    }
+  
     return (
-        <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" >
-            <FormControl>
-                <FormLabel htmlFor='name'>Dein Name</FormLabel>
-                <Input id="name" type="text" />
-                <FormHelperText>Gib bitte deinen vollständigen Namen an</FormHelperText>
-
-                <FormLabel htmlFor='email'>Deine Email</FormLabel>
-                <Input id="email" type="email" />
-                <FormHelperText>Über welche Email Addresse kann ich dich erreichen?</FormHelperText>
-
-                <FormLabel htmlFor='phone'>Deine Telefonnummer</FormLabel>
-                <Input id="phone"  type='tel' />
-                <FormHelperText>Über welche Nummer kann ich dich erreichen?</FormHelperText>
-
-                <FormLabel htmlFor='message'>Deine Nachricht</FormLabel>
-                <Input id="message" type="text" />
-                <FormHelperText>Wie kann ich dir behilflich sein?</FormHelperText>
-            </FormControl>
-        </Box>
+      <Box mt={150}>
+          <Formik
+            initialValues={{ name: '', email: '', phone: '', text: '' }}
+            onSubmit={(values, actions) => {
+              setTimeout(() => {
+                alert(JSON.stringify(values, null, 2))
+                actions.setSubmitting(false)
+              }, 1000)
+            }}
+          >
+            {(props) => (
+              <Form>
+                <Field name='name' validate={validateName}>
+                  {({ field, form }) => (
+                    <FormControl isInvalid={form.errors.name && form.touched.name}>
+                      <FormLabel htmlFor='name'></FormLabel>
+                      <Input {...field} id='name' placeholder='name' type='text' css={{border: `.2px solid ${useColorModeValue('grey', 'white')}`}} />
+                      <FormErrorMessage>{form.errors.name}</FormErrorMessage>
+                    </FormControl>
+                  )}
+                </Field>
+                <Field name='email' validate={validateEmail}>
+                  {({ field, form }) => (
+                    <FormControl isInvalid={form.errors.email && form.touched.email}>
+                      <FormLabel htmlFor='email'></FormLabel>
+                      <Input {...field} id='email' placeholder='email' type="email" css={{border: `.2px solid ${useColorModeValue('grey', 'white')}`}} />
+                      <FormErrorMessage>{form.errors.email}</FormErrorMessage>
+                    </FormControl>
+                  )}
+                </Field>
+                <Field name='phone' validate={validatePhone}>
+                  {({ field, form }) => (
+                    <FormControl isInvalid={form.errors.phone && form.touched.phone}>
+                      <FormLabel htmlFor='phone'></FormLabel>
+                      <Input {...field} id='phone' placeholder='Diene Telefonnumer' type="tel" css={{border: `.2px solid ${useColorModeValue('grey', 'white')}`}} />
+                      <FormErrorMessage>{form.errors.phone}</FormErrorMessage>
+                    </FormControl>
+                  )}
+                </Field>
+                <Container>
+                    <Heading as="h1" fontSize={24}>Serivces</Heading>
+                    <Box display='flex' flexDirection='row' justifyContent='space-evenly' alignItems='center'>
+                        <ButtonGroup>
+                            <Button variant='outline' colorScheme={useColorModeValue('teal', 'white')}>Web Design</Button>
+                            <Button variant='outline' colorScheme={useColorModeValue('teal', 'white')}>Web Development</Button>
+                            <Button variant='outline' colorScheme={useColorModeValue('teal', 'white')}>Andere</Button>
+                        </ButtonGroup>
+                    </Box>
+                </Container>
+                <Field name='text' validate={validateText}>
+                  {({ field, form }) => (
+                    <FormControl isInvalid={form.errors.text && form.touched.text}>
+                      <FormLabel htmlFor='text'></FormLabel>
+                      <Input {...field} id='text' placeholder='Deine Nachricht' type="text" css={{border: `.2px solid ${useColorModeValue('grey', 'white')}`}}/>
+                      <FormErrorMessage>{form.errors.text}</FormErrorMessage>
+                    </FormControl>
+                  )}
+                </Field>
+                <Button
+                  mt={4}
+                  colorScheme='teal'
+                  color='white'
+                  isLoading={props.isSubmitting}
+                  type='submit'
+                  rightIcon={<SendIcon />}
+                >
+                  Submit
+                </Button>
+              </Form>
+            )}
+          </Formik>
+      </Box>
     )
-   
-}
+  }
 
-export default Form;
+  export default FormikExample
