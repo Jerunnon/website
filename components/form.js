@@ -12,9 +12,9 @@ import {
     Heading,
     Container,
     ButtonGroup,
+    Textarea,
     useColorModeValue,
-    border
-} from '@chakra-ui/react'
+    } from '@chakra-ui/react'
 
 
 function FormikExample() {
@@ -79,16 +79,16 @@ function FormikExample() {
                   {({ field, form }) => (
                     <FormControl isInvalid={form.errors.name && form.touched.name}>
                       <FormLabel htmlFor='name'></FormLabel>
-                      <Input {...field} id='name' placeholder='name' type='text' css={{border: `.2px solid ${useColorModeValue('grey', 'white')}`}} />
+                      <Input {...field} id='name' placeholder='Dein Name' type='text' css={{border: `.2px solid ${useColorModeValue('grey', 'white')}`}} height={55} />
                       <FormErrorMessage>{form.errors.name}</FormErrorMessage>
                     </FormControl>
                   )}
                 </Field>
                 <Field name='email' validate={validateEmail}>
                   {({ field, form }) => (
-                    <FormControl isInvalid={form.errors.email && form.touched.email}>
+                    <FormControl isInvalid={form.errors.email && form.touched.email} my={6}>
                       <FormLabel htmlFor='email'></FormLabel>
-                      <Input {...field} id='email' placeholder='email' type="email" css={{border: `.2px solid ${useColorModeValue('grey', 'white')}`}} />
+                      <Input {...field} id='email' placeholder='Deine Email Adresse' type="email" css={{border: `.2px solid ${useColorModeValue('grey', 'white')}`}} height={55} />
                       <FormErrorMessage>{form.errors.email}</FormErrorMessage>
                     </FormControl>
                   )}
@@ -97,12 +97,12 @@ function FormikExample() {
                   {({ field, form }) => (
                     <FormControl isInvalid={form.errors.phone && form.touched.phone}>
                       <FormLabel htmlFor='phone'></FormLabel>
-                      <Input {...field} id='phone' placeholder='Diene Telefonnumer' type="tel" css={{border: `.2px solid ${useColorModeValue('grey', 'white')}`}} />
+                      <Input {...field} id='phone' placeholder='Deine Telefonnumer' type="tel" css={{border: `.2px solid ${useColorModeValue('grey', 'white')}`}} height={55} />
                       <FormErrorMessage>{form.errors.phone}</FormErrorMessage>
                     </FormControl>
                   )}
                 </Field>
-                <Container>
+                <Container display='flex' flexDirection='column' justifyContent='flex-start' maxW='100%' my={6} mx={0} p={0}>
                     <Heading as="h1" fontSize={24}>Serivces</Heading>
                     <Box display='flex' flexDirection='row' justifyContent='space-evenly' alignItems='center'>
                         <ButtonGroup>
@@ -116,13 +116,13 @@ function FormikExample() {
                   {({ field, form }) => (
                     <FormControl isInvalid={form.errors.text && form.touched.text}>
                       <FormLabel htmlFor='text'></FormLabel>
-                      <Input {...field} id='text' placeholder='Deine Nachricht' type="text" css={{border: `.2px solid ${useColorModeValue('grey', 'white')}`}}/>
+                      <Textarea {...field} id='text' placeholder='Deine Nachricht' type="text" css={{border: `.2px solid ${useColorModeValue('grey', 'white')}`}} rows={10}/>
                       <FormErrorMessage>{form.errors.text}</FormErrorMessage>
                     </FormControl>
                   )}
                 </Field>
                 <Button
-                  mt={4}
+                  my={4}
                   colorScheme='teal'
                   color='white'
                   isLoading={props.isSubmitting}
