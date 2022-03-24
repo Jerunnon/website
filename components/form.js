@@ -5,7 +5,6 @@ import {
     Box,
     FormControl,
     FormLabel,
-    FormHelperText,
     FormErrorMessage,
     Input,
     Button,
@@ -15,9 +14,13 @@ import {
     Textarea,
     useColorModeValue,
     } from '@chakra-ui/react'
+import { createTransport } from 'nodemailer';
 
 
 function FormikExample() {
+
+  const [ active, setActive ] = useState(false);
+
     function validateName(value) {
         let error
         if (!value) {
@@ -61,17 +64,44 @@ function FormikExample() {
 
         return error;
     }
+
+    function onSubmit(name, email, text, phone) {
+      const nodemailer = require('nodemailer');
+
+      let transporter = createTransport({
+        host: 'mail.gmx.net',
+        port: 587,
+        secure: false,
+        auth: {
+          user: 'simon-info@gmx.net',
+          pass: process.env.GMX_PASS
+        }
+      })
+
+      let mail = transporter.sendMail({
+        from: '" Simon Klein " <simon-info@gmx.net>',
+        to: email,
+        subject: "Anfrage",
+        text: text,
+        html: `<h1>Anfrage von ${name}</h1>
+
+        <div>
+          <p>${email}</p>
+          <p>${phone ? phone : ''}<p>
+        </div>
+
+        <p>${text}</p>
+        
+        `
+      })
+
+    }
   
     return (
       <Box mt={150}>
           <Formik
             initialValues={{ name: '', email: '', phone: '', text: '' }}
-            onSubmit={(values, actions) => {
-              setTimeout(() => {
-                alert(JSON.stringify(values, null, 2))
-                actions.setSubmitting(false)
-              }, 1000)
-            }}
+            onSubmit={onSubmit(name, email, text, phone)}
           >
             {(props) => (
               <Form>
@@ -106,9 +136,9 @@ function FormikExample() {
                     <Heading as="h1" fontSize={24}>Serivces</Heading>
                     <Box display='flex' flexDirection='row' justifyContent='space-evenly' alignItems='center'>
                         <ButtonGroup>
-                            <Button variant='outline' colorScheme={useColorModeValue('teal', 'white')}>Web Design</Button>
-                            <Button variant='outline' colorScheme={useColorModeValue('teal', 'white')}>Web Development</Button>
-                            <Button variant='outline' colorScheme={useColorModeValue('teal', 'white')}>Andere</Button>
+                            <Button variant='outline' colorScheme={useColorModeValue('teal', 'white')} onClick={setActive(!active)} css={ active ? { backgroundColor: 'white' } : { backgroundColor: 'initial' }} >Web Design</Button>
+                            <Button variant='outline' colorScheme={useColorModeValue('teal', 'white')} onClick={setActive(!active)} css={ active ? { backgroundColor: 'white' } : { backgroundColor: 'initial' }}>Web Development</Button>
+                            <Button variant='outline' colorScheme={useColorModeValue('teal', 'white')} onClick={setActive(!active)} css={ active ? { backgroundColor: 'white' } : { backgroundColor: 'initial' }}>Andere</Button>
                         </ButtonGroup>
                     </Box>
                 </Container>
