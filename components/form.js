@@ -7,14 +7,13 @@ import {
     FormLabel,
     FormErrorMessage,
     Input,
+    IconButton,
     Button,
     Heading,
     Container,
     ButtonGroup,
     Textarea,
-    useColorModeValue,
     } from '@chakra-ui/react'
-import { createTransport } from 'nodemailer';
 
 
 function FormikExample() {
@@ -66,34 +65,37 @@ function FormikExample() {
     }
 
     function onSubmit(name, email, text, phone) {
-      const nodemailer = require('nodemailer');
+      // const nodemailer = require('nodemailer');
 
-      let transporter = createTransport({
-        host: 'mail.gmx.net',
-        port: 587,
-        secure: false,
-        auth: {
-          user: 'simon-info@gmx.net',
-          pass: process.env.GMX_PASS
-        }
-      })
+      // let transporter = nodemailer.createTransport({
+      //   host: 'mail.gmx.net',
+      //   port: 587,
+      //   secure: false,
+      //   auth: {
+      //     user: 'simon-info@gmx.net',
+      //     pass: process.env.GMX_PASS
+      //   }
+      // })
 
-      let mail = transporter.sendMail({
-        from: '" Simon Klein " <simon-info@gmx.net>',
-        to: email,
-        subject: "Anfrage",
-        text: text,
-        html: `<h1>Anfrage von ${name}</h1>
+      // let mail = transporter.sendMail({
+      //   from: '" Simon Klein " <simon-info@gmx.net>',
+      //   to: email,
+      //   subject: "Anfrage",
+      //   text: text,
+      //   html: `<h1>Anfrage von ${name}</h1>
 
-        <div>
-          <p>${email}</p>
-          <p>${phone ? phone : ''}<p>
-        </div>
+      //   <div>
+      //     <p>${email}</p>
+      //     <p>${phone ? phone : ''}<p>
+      //   </div>
 
-        <p>${text}</p>
+      //   <p>${text}</p>
         
-        `
-      })
+      //   `
+      // })
+
+      // return mail;
+      console.log(name, email, text, phone)
 
     }
   
@@ -109,7 +111,7 @@ function FormikExample() {
                   {({ field, form }) => (
                     <FormControl isInvalid={form.errors.name && form.touched.name}>
                       <FormLabel htmlFor='name'></FormLabel>
-                      <Input {...field} id='name' placeholder='Dein Name' type='text' css={{border: `.2px solid ${useColorModeValue('grey', 'white')}`}} height={55} />
+                      <Input {...field} id='name' placeholder='Dein Name' type='text' height={55} />
                       <FormErrorMessage>{form.errors.name}</FormErrorMessage>
                     </FormControl>
                   )}
@@ -118,7 +120,7 @@ function FormikExample() {
                   {({ field, form }) => (
                     <FormControl isInvalid={form.errors.email && form.touched.email} my={6}>
                       <FormLabel htmlFor='email'></FormLabel>
-                      <Input {...field} id='email' placeholder='Deine Email Adresse' type="email" css={{border: `.2px solid ${useColorModeValue('grey', 'white')}`}} height={55} />
+                      <Input {...field} id='email' placeholder='Deine Email Adresse' type="email" height={55} />
                       <FormErrorMessage>{form.errors.email}</FormErrorMessage>
                     </FormControl>
                   )}
@@ -127,7 +129,7 @@ function FormikExample() {
                   {({ field, form }) => (
                     <FormControl isInvalid={form.errors.phone && form.touched.phone}>
                       <FormLabel htmlFor='phone'></FormLabel>
-                      <Input {...field} id='phone' placeholder='Deine Telefonnumer' type="tel" css={{border: `.2px solid ${useColorModeValue('grey', 'white')}`}} height={55} />
+                      <Input {...field} id='phone' placeholder='Deine Telefonnumer' type="tel" height={55} />
                       <FormErrorMessage>{form.errors.phone}</FormErrorMessage>
                     </FormControl>
                   )}
@@ -136,9 +138,9 @@ function FormikExample() {
                     <Heading as="h1" fontSize={24}>Serivces</Heading>
                     <Box display='flex' flexDirection='row' justifyContent='space-evenly' alignItems='center'>
                         <ButtonGroup>
-                            <Button variant='outline' colorScheme={useColorModeValue('teal', 'white')} onClick={setActive(!active)} css={ active ? { backgroundColor: 'white' } : { backgroundColor: 'initial' }} >Web Design</Button>
-                            <Button variant='outline' colorScheme={useColorModeValue('teal', 'white')} onClick={setActive(!active)} css={ active ? { backgroundColor: 'white' } : { backgroundColor: 'initial' }}>Web Development</Button>
-                            <Button variant='outline' colorScheme={useColorModeValue('teal', 'white')} onClick={setActive(!active)} css={ active ? { backgroundColor: 'white' } : { backgroundColor: 'initial' }}>Andere</Button>
+                            <IconButton variant='outline' onClick={setActive(!active)} css={ active ? { backgroundColor: 'white' } : { backgroundColor: 'initial' }}>Web Design</IconButton>
+                            <IconButton variant='outline' onClick={setActive(!active)} css={ active ? { backgroundColor: 'white' } : { backgroundColor: 'initial' }}>Web Development</IconButton>
+                            <IconButton variant='outline' onClick={setActive(!active)} css={ active ? { backgroundColor: 'white' } : { backgroundColor: 'initial' }}>Andere</IconButton>
                         </ButtonGroup>
                     </Box>
                 </Container>
@@ -146,7 +148,7 @@ function FormikExample() {
                   {({ field, form }) => (
                     <FormControl isInvalid={form.errors.text && form.touched.text}>
                       <FormLabel htmlFor='text'></FormLabel>
-                      <Textarea {...field} id='text' placeholder='Deine Nachricht' type="text" css={{border: `.2px solid ${useColorModeValue('grey', 'white')}`}} rows={10}/>
+                      <Textarea {...field} id='text' placeholder='Deine Nachricht' type="text" rows={10}/>
                       <FormErrorMessage>{form.errors.text}</FormErrorMessage>
                     </FormControl>
                   )}

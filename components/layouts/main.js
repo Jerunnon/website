@@ -20,7 +20,7 @@ const main = ({ children, router }) => {
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <meta name="description" content="Simon Klein's Homepage" />
                 <meta name='author' content='Simon Klein' />
-                <link rel="apple-touch-icon" href="favicon.png" /> //TODO touchicon erstellen
+                <link rel="apple-touch-icon" href="favicon.png" /> {/*TODO touchicon erstellen */}
                 <link rel="shortcut icon" href='favicon.ico' type='image/x-icon' />
                 <meta name='twitter:card' content='summary-large_image' />
                 <title>Simon Klein - Homepage</title>

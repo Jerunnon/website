@@ -5,9 +5,9 @@ import { loadGLTFModel } from '../lib/model'
 
 import { RocketManSpinner, RocketManContainer } from './rocketManLoader'
 
-function easeOutCirc(x) {
-  return Math.sqrt( 1- Math.pow(x - 1, 4) )
-}
+// function easeOutCirc(x) {
+//   return Math.sqrt( 1- Math.pow(x - 1, 4) )
+// }
 
 const RocketMan = () => {
 
@@ -30,6 +30,7 @@ const RocketMan = () => {
     }
   }, [renderer])
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     const { current: container } = refContainer
     if(container && !renderer) {
@@ -94,8 +95,8 @@ const RocketMan = () => {
         frame = frame <= 100 ? frame  + 1 : frame 
         
         if(frame <= 100) {
-          const p = initialCameraPosition
-          const rootSpeed = -easeOutCirc(frame / 120 ) * Math.PI * 20
+          // const p = initialCameraPosition
+          // const rootSpeed = -easeOutCirc(frame / 120 ) * Math.PI * 20
           
           camera.position.y = 10
           camera.position.x = -20

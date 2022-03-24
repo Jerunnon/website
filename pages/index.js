@@ -80,7 +80,7 @@ const Home = () => {
       </Section>
 
       <Box>
-        <NextLink href='/portfolio' scroll={false} >
+        <NextLink href='/portfolio' scroll={false} passHref >
           <Button
             rightIcon={ <ChevronRightIcon /> }
             colorScheme='teal'
@@ -164,7 +164,7 @@ const Home = () => {
         </SimpleGrid>
 
         <Box align="center" my={6}>
-            <NextLink href="/posts" scroll={false}>
+            <NextLink href="/posts" scroll={false} passHref >
               <Button rightIcon={<ChevronRightIcon />} colorScheme="teal">
                 neue posts
               </Button>
