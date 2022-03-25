@@ -49,7 +49,7 @@ const RocketMan = () => {
       const scale = scH * 0.005 + 4.8
       const camera = new THREE.OrthographicCamera(
         -scale,
-        scale,
+        scale + 0.5,
         scale,
         -scale,
         0.01,
