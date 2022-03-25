@@ -29,7 +29,7 @@ const Logo = () => {
         <Link href='/' className='Link'>
            <a>
                <LogoBox>
-                    <Image src={rocketbeltImage} width={30} height={30} alt="logo" />
+                    <Image src={rocketbeltImage} width={20} height={20} alt="logo" />
                     <Text
                      color={useColorModeValue('gray.800', 'whiteAlpha.900')}
                      fontFamily='Fedora, sans-serif'
