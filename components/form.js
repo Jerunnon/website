@@ -1,63 +1,93 @@
-import React from 'react';
-import { Formik } from 'formik';
-    
-const Basic = () => (
-  <div>
-    <h1>Anywhere in your app!</h1>
-    <Formik
-      initialValues={{ email: '', password: '' }}
-      validate={values => {
-        const errors = {};
-        if (!values.email) {
-          errors.email = 'Required';
-        } else if (
-          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-        ) {
-          errors.email = 'Invalid email address';
-        }
-        return errors;
-      }}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 400);
-      }}
-    >
-      {({
-        values,
-        errors,
-        touched,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        isSubmitting,
-        /* and other goodies */
-      }) => (
-        <form onSubmit={handleSubmit}>
-          <input
-            type="email"
-            name="email"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.email}
-          />
-          {errors.email && touched.email && errors.email}
-          <input
-            type="password"
-            name="password"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.password}
-          />
-          {errors.password && touched.password && errors.password}
-          <button type="submit" disabled={isSubmitting}>
-            Submit
-          </button>
-        </form>
-      )}
-    </Formik>
-  </div>
-);
+import { useState } from "react";
 
-export default Basic;
+import {
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  Input,
+  Box,
+  Button, 
+  ButtonGroup,
+  useColorModeValue,
+  Textarea
+} from '@chakra-ui/react'
+
+function Form() {
+
+  // const [ input, setInput ] = useState('')
+  // let regex = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
+  // const matchMail = input.match(regex)
+
+  const [ name, setName ] = useState('')
+  const [ email, setEmail ] = useState('')
+  const [ phone, setPhone ] = useState('')
+  const [ option, setOption ] = useState('')
+  const [message, setMessage ] = useState('') 
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+  
+    let data = {
+      name,
+      email,
+      phone,
+      option,
+      message
+    }
+  
+      fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      }).then((res) => {
+          console.log('Response received')
+          if (res.status === 200) {
+              console.log('Response succeeded!')
+              setName('')
+              setEmail('')
+              setPhone('')
+              setOption('')
+              setMessage('')
+          }
+      })
+  }
+    
+    return (
+      <Box as='form' mt={150} display='flex' flexDirection='column'justifyContent='center' alignItems='center' > 
+    
+        <FormControl isRequired>
+          <FormLabel htmlFor="name"></FormLabel>
+          <Input id="name" name="name" type='text' onChange={(e) => {setName(e.target.value)}} value={name} placeholder="Dein Name" />
+        </FormControl>
+    
+        <FormControl isRequired>
+          <FormLabel htmlFor="email"></FormLabel>
+          <Input id="email" name="email" type='email' onChange={(e) => {setEmail(e.target.value)}} value={email} placeholder="Deine Email Adresse" />
+        </FormControl>
+    
+        <FormControl>
+          <FormLabel htmlFor="phone"></FormLabel>
+          <Input id="phone" name="phone" type='text' onChange={(e) => {setPhone(e.target.value)}} value={phone} placeholder="Deine Handynummer" />
+        </FormControl>
+    
+        <ButtonGroup display='flex' flexDirection='row' justifyContent='space-evenly' alignItems='center' my={10} variant='outline' >
+          <Button colorScheme={useColorModeValue('teal', 'white' )} onClick={() => setOption('Web Design')} _hover={{backgroundColor: 'white', color: 'black'}} >Web Design</Button>
+          <Button colorScheme={useColorModeValue('teal', 'white' )} onClick={() => setOption('Web Development')} _hover={{backgroundColor: 'white', color: 'black'}} >Web Development</Button>
+          <Button colorScheme={useColorModeValue('teal', 'white' )} onClick={() => setOption('Sonstiges')} _hover={{backgroundColor: 'white', color: 'black'}} >Sonstiges</Button>
+        </ButtonGroup>
+    
+        <FormControl isRequired>
+          <FormLabel htmlFor="message"></FormLabel>
+          <Textarea id="message" name="message" rows={5} type="text" onChange={(e) => {setMessage(e.target.value)}} value={message} placeholder="Deine Nachricht" />
+        </FormControl>
+    
+        <Button type="submit" id="submitButton" colorScheme={'teal'} onClick={(e) => {handleSubmit(e)}} >Submit</Button>
+    
+      </Box>
+    )
+  }
+
+export default Form;
