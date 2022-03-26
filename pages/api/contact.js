@@ -5,8 +5,7 @@ export default function (req, res) {
     const transporter = nodemailer.createTransport({
             host: 'smtp.ionos.de',
             port: 587,
-            secure: true,
-            tls: true,
+            secure: false,
             auth: {
                 user: process.env.MAIL_USER,
                 pass: process.env.MAIL_PASS
@@ -15,10 +14,10 @@ export default function (req, res) {
 
     const mailData = {
         from: '"Simon Klein" <simonklein@simonklein.net>',
-        to: req.body.name,
+        to: req.body.email,
         subject: `Nachricht von ${req.body.name}`,
-        text: req.body.text,
-        html: `<div>${req.body.text}</div>`
+        text: req.body.message,
+        html: `<div>${req.body.message}</div>`
     }
 
     transporter.sendMail(mailData, function(err, info) {
