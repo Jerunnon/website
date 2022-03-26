@@ -6,6 +6,7 @@ export default function (req, res) {
             host: 'smtp.ionos.de',
             port: 587,
             secure: true,
+            tls: true,
             auth: {
                 user: process.env.MAIL_USER,
                 pass: process.env.MAIL_PASS
