@@ -13,7 +13,6 @@ import {
 
 function Form() {
 
-  // const [ input, setInput ] = useState('')
   // let regex = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
   // const matchMail = input.match(regex)
 
@@ -60,17 +59,17 @@ function Form() {
     
         <FormControl isRequired>
           <FormLabel htmlFor="name"></FormLabel>
-          <Input id="name" name="name" type='text' onChange={(e) => {setName(e.target.value)}} value={name} placeholder="Dein Name" />
+          <Input id="name" name="name" type='text' onChange={(e) => setName(e.target.value)} value={name} placeholder="Dein Name" />
         </FormControl>
     
         <FormControl isRequired>
           <FormLabel htmlFor="email"></FormLabel>
-          <Input id="email" name="email" type='email' onChange={(e) => {setEmail(e.target.value)}} value={email} placeholder="Deine Email Adresse" />
+          <Input id="email" name="email" type='email' onChange={(e) => setEmail(e.target.value)} value={email} placeholder="Deine Email Adresse" />
         </FormControl>
     
         <FormControl>
           <FormLabel htmlFor="phone"></FormLabel>
-          <Input id="phone" name="phone" type='text' onChange={(e) => {setPhone(e.target.value)}} value={phone} placeholder="Deine Handynummer" />
+          <Input id="phone" name="phone" type='text' onChange={(e) => setPhone(e.target.value)} value={phone} placeholder="Deine Handynummer" />
         </FormControl>
     
         <ButtonGroup display='flex' flexDirection='row' justifyContent='space-evenly' alignItems='center' my={10} variant='outline' >
@@ -81,7 +80,7 @@ function Form() {
     
         <FormControl isRequired>
           <FormLabel htmlFor="message"></FormLabel>
-          <Textarea id="message" name="message" rows={5} type="text" onChange={(e) => {setMessage(e.target.value)}} value={message} placeholder="Deine Nachricht" />
+          <Textarea id="message" name="message" rows={5} type="text" onChange={(e) => setMessage(e.target.value)} value={message} placeholder="Deine Nachricht" />
         </FormControl>
     
         <Button type="submit" id="submitButton" colorScheme={'teal'} onClick={(e) => {handleSubmit(e)}} >Submit</Button>

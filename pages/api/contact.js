@@ -13,9 +13,9 @@ export default function (req, res) {
     });
 
     const mailData = {
-        from: '"Simon Klein" <simonklein@simonklein.net>',
-        to: req.body.email,
-        subject: `Nachricht von ${req.body.name}`,
+        from: `"${req.body.name}" <${req.body.email} `,
+        to: process.env.MAIL_USER,
+        subject: `Anfrage zu ${req.body.option} von ${req.body.name}`,
         text: req.body.message,
         html: `<div>${req.body.message}</div>`
     }
