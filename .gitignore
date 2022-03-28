@@ -33,3 +33,7 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+#custom 
+/components/form_backup.js
+/components/testForm.js
