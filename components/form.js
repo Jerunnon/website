@@ -1,92 +1,112 @@
-import { useState } from "react";
+import styled from '@emotion/styled'
+
+import { Formik } from 'formik'
+import * as Yup from 'yup'
 
 import {
-  FormControl,
-  FormLabel,
-  Input,
-  Box,
-  Button, 
-  ButtonGroup,
-  useColorModeValue,
-  Textarea
+    FormLabel,
+    Input,
+    Button,
+    ButtonGroup,
+    Box,
+    FormErrorMessage,
+    FormControl,
+    Textarea
 } from '@chakra-ui/react'
+import { useState } from 'react'
 
-function Form() {
-
-  // let regex = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
-  // const matchMail = input.match(regex)
-
-  const [ name, setName ] = useState('')
-  const [ email, setEmail ] = useState('')
-  const [ phone, setPhone ] = useState('')
-  const [ option, setOption ] = useState('')
-  const [message, setMessage ] = useState('') 
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-  
-    let data = {
-      name,
-      email,
-      phone,
-      option,
-      message
+const StyledButton = styled(Button) `
+    background: transparent;
+    ${({active}) => 
+        active && ` 
+            background: white;
+            color: black
+        `
     }
-  
-      fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json, text/plain, */*',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      }).then((res) => {
-          console.log('Response received')
-          console.log(data)
-          if (res.status === 200) {
-              console.log('Response succeeded!')
-              setName('')
-              setEmail('')
-              setPhone('')
-              setOption('')
-              setMessage('')
-          }
-      })
-  }
-    
-    return (
-      <Box as='form' mt={150} display='flex' flexDirection='column'justifyContent='center' alignItems='center' > 
-    
-        <FormControl isRequired>
-          <FormLabel htmlFor="name"></FormLabel>
-          <Input id="name" name="name" type='text' onChange={(e) => setName(e.target.value)} value={name} placeholder="Dein Name" />
-        </FormControl>
-    
-        <FormControl isRequired>
-          <FormLabel htmlFor="email"></FormLabel>
-          <Input id="email" name="email" type='email' onChange={(e) => setEmail(e.target.value)} value={email} placeholder="Deine Email Adresse" />
-        </FormControl>
-    
-        <FormControl>
-          <FormLabel htmlFor="phone"></FormLabel>
-          <Input id="phone" name="phone" type='text' onChange={(e) => setPhone(e.target.value)} value={phone} placeholder="Deine Handynummer" />
-        </FormControl>
-    
-        <ButtonGroup display='flex' flexDirection='row' justifyContent='space-evenly' alignItems='center' my={10} variant='outline' >
-          <Button colorScheme={useColorModeValue('teal', 'white' )} onClick={() => setOption('Web Design')} _hover={{backgroundColor: 'white', color: 'black'}} >Web Design</Button>
-          <Button colorScheme={useColorModeValue('teal', 'white' )} onClick={() => setOption('Web Development')} _hover={{backgroundColor: 'white', color: 'black'}} >Web Development</Button>
-          <Button colorScheme={useColorModeValue('teal', 'white' )} onClick={() => setOption('Sonstiges')} _hover={{backgroundColor: 'white', color: 'black'}} >Sonstiges</Button>
-        </ButtonGroup>
-    
-        <FormControl isRequired>
-          <FormLabel htmlFor="message"></FormLabel>
-          <Textarea id="message" name="message" rows={5} type="text" onChange={(e) => setMessage(e.target.value)} value={message} placeholder="Deine Nachricht" />
-        </FormControl>
-    
-        <Button type="submit" id="submitButton" colorScheme={'teal'} onClick={(e) => {handleSubmit(e)}} >Submit</Button>
-    
-      </Box>
+`
+const Form = () => {
+
+    const types = ["Web Design", "Web Development", "Sonstiges"]
+
+    const [ active, setActive ] = useState(types[null]);
+
+    return (  
+        <Formik
+            initialValues= {{
+                name: '',
+                email: '',
+                phone: '',
+                message: ''
+            }}
+            
+            validationSchema = {Yup.object({
+                name: Yup.string()
+                .min(3, 'mindestens 3 Zeichen eingeben')
+                .max(70, 'maximale Länge beträgt 70 zeichen')
+                .required('Required'),
+                email: Yup.string().email('Ungültiges Format')
+                .required('Required'),
+                phone: Yup.string(),
+                message: Yup.string().required('Required')
+                .min(5, 'Mindestens 5 Zeichen eingeben!')
+            })}
+            onSubmit={ async (values, actions) => {
+                
+                await fetch('/api/contact', {
+                  method: 'POST',
+                  headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(values)
+                }).then((res) => {
+                  actions.setSubmitting(false)
+                  console.log('Response received')
+                  if(res.status === 200) {
+                    console.log('Response succeeded!')
+                  } else { console.log('Response failed') }
+                })
+            }}
+        >
+            {(formik) => (
+                <form 
+                    as='form' 
+                    onSubmit={formik.handleSubmit}
+                    display='flex'
+                    flexDirection='column'
+                    alignItems='center'
+                    justifyContent='center'
+                    mt={150}
+                >
+                    <FormControl>
+
+                        <FormLabel htmlFor='name'></FormLabel>
+                        <Input variant='outline' size='lg' id='name' name='name' placeholder='Dein Name' type='text' value={formik.values.name} onChange={formik.handleChange}/>
+                        {formik.touched.name && formik.errors.name ? <FormErrorMessage>{formik.errors.name}</FormErrorMessage> : null}
+
+                        <FormLabel htmlFor='email'></FormLabel>
+                        <Input variant='outline' size='lg' name='email' type='email' placeholder='Deine Email Adresse' value={formik.values.email} onChange={formik.handleChange} />
+                        {formik.touched.email && formik.errors.email ? <FormErrorMessage>{formik.errors.email}</FormErrorMessage> : null}
+
+                        <FormLabel htmlFor='phone'></FormLabel>
+                        <Input variant='outline' size='lg' name='phone' type='text' placeholder='Deine Handynummer' value={formik.values.phone} onChange={formik.handleChange} />
+                        
+                        <ButtonGroup display='flex' flexDirection='row' justifyContent='space-evenly' alignItems='center' my={10} variant='outline' >
+                            {types.map((type) => (
+                                <StyledButton active={active === type} onClick={() => setActive(type)} key={type}>{type}</StyledButton>
+                            ))}
+                        </ButtonGroup>
+
+                        <FormLabel htmlFor='message' ></FormLabel>
+                        <Textarea size='lg' rows={5} placeholder='Deine Nachricht' />        
+                        
+                    </FormControl>
+            
+                <Button type='submit' isLoading={formik.isSubmitting} colorScheme='teal' my={6}>Submit</Button>
+            </form>
+            )}      
+        </Formik>
     )
-  }
+}
 
 export default Form;
