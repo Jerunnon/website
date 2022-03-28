@@ -69,7 +69,7 @@ const Form = () => {
             }}
         >
             {(formik) => (
-                <form 
+                <Box 
                     as='form' 
                     onSubmit={formik.handleSubmit}
                     display='flex'
@@ -103,7 +103,7 @@ const Form = () => {
                     </FormControl>
             
                 <Button type='submit' isLoading={formik.isSubmitting} colorScheme='teal' my={6}>Submit</Button>
-            </form>
+            </Box>
             )}      
         </Formik>
     )
