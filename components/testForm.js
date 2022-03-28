@@ -1,72 +1,98 @@
-import { Box, FormErrorMessage, FormLabel, Input, Button, ButtonGroup, useColorModeValue, Textarea } from "@chakra-ui/react"
-import { Formik } from "formik"
+import styled from '@emotion/styled'
+
+import { Formik } from 'formik'
 import * as Yup from 'yup'
-import { useState } from "react"
 
-const ContactForm = () => {
+import {
+    FormLabel,
+    Input,
+    Button,
+    Box,
+    FormErrorMessage,
+    ButtonGroup,
+    FormControl,
+    Textarea
+} from '@chakra-ui/react'
+import { useState } from 'react'
 
-    return (
+const StyledButton = styled(Button) `
+    background: transparent;
+    ${({active}) => 
+        active && ` 
+            background: white;
+            color: black
+        `
+    }
+`
+const Form = () => {
+
+    const types = ["Web Design", "Web Development", "Sonstiges"]
+
+    const [ active, setActive ] = useState(types[null]);
+
+    return (  
         <Formik
-            initialValues={{ name: '', email: '', phone: '', message: '' }}
-            validationSchema={Yup.object({
-                name: Yup.string().max(100, 'Maximale länge beträgt 100 Zeichen').required('Required'),
-                email: Yup.string().email('Ungültige Email Adresse').required('Required'),
-                phone: Yup.string().max(30, 'Maximale Länge beträgt 30 Zeichen'),
-                option: Yup.string().required('Required'),
-                message: Yup.string().max(500, 'Maximale Länge beträgt 500 Zeichen').required('Required')
-            })}
-            onSubmit={(values, { setSubmitting }) => {
-                setLoading(true)
-                fetch('/api/contact', {
-                    method: 'POST',
-                    headers: {
-                      'Accept': 'application/json, text/plain, */*',
-                      'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(values)
-                    }).then((res) => {
-                        console.log('Response received')
-                        console.log(data)
-                        if (res.status === 200) {
-                            console.log('Response succeeded!')  
-                            setSubmitting(false)
-                        }
-                  })
-               
+            initialValues= {{
+                name: '',
+                email: '',
+                phone: '',
+                message: ''
             }}
-            >
+            
+            validationSchema = {Yup.object({
+                name: Yup.string()
+                .min(3, 'mindestens 3 Zeichen eingeben')
+                .max(70, 'maximale Länge beträgt 70 zeichen')
+                .required('Required'),
+                email: Yup.string().email('Ungültiges Format')
+                .required('Required'),
+                phone: Yup.string(),
+                message: Yup.string().required('Required')
+                .min(5, 'Mindestens 5 Zeichen eingeben!')
+            })}
+            onSubmit={(values) => {
+                alert(JSON.stringify(values, null, 2));
+            }}
+        >
+            {formik => (
+                <Box 
+                    as='form' 
+                    onSubmit={formik.handleSubmit}
+                    display='flex'
+                    flexDirection='column'
+                    alignItems='center'
+                    justifyContent='center'
+                    mt={150}
+                >
+                    <FormControl isInvalid={formik.errors.name && formik.errors.email && formik.errors.message }>
 
-            {({ isSubmitting, handleSubmit, errors, touched, getFieldProps }) => (
-                <Box mt={150} display='flex' flexDirection='column'justifyContent='center' alignItems='center' >
+                        <FormLabel htmlFor='name'></FormLabel>
+                        <Input variant='outline' size='lg' id='name' name='name' placeholder='Dein Name' type='text' value={formik.values.name} onChange={formik.handleChange}/>
+                        {formik.touched.name && formik.errors.name ? <FormErrorMessage>{formik.errors.name}</FormErrorMessage> : null}
 
-                    <FormLabel htmlFor="name"></FormLabel>
-                    <Input id="name" name="name" type='text' {...getFieldProps('name')} placeholder="Dein Name" />
-                    {touched.name && errors.name ? (<FormErrorMessage>{errors.name}</FormErrorMessage>) : undefined }
+                        <FormLabel htmlFor='email'></FormLabel>
+                        <Input variant='outline' size='lg' name='email' type='email' placeholder='Deine Email Adresse' value={formik.values.email} onChange={formik.handleChange} />
+                        {formik.touched.email && formik.errors.email ? <FormErrorMessage>{formik.errors.email}</FormErrorMessage> : null}
 
-                    <FormLabel htmlFor="email"></FormLabel>
-                    <Input id="email" name="email" type='email' {...getFieldProps('email')} placeholder="Deine Email Adresse" />
-                    {touched.email && errors.email ? (<FormErrorMessage>{errors.email}</FormErrorMessage>) : undefined }
+                        <FormLabel htmlFor='phone'></FormLabel>
+                        <Input variant='outline' size='lg' name='phone' type='text' placeholder='Deine Handynummer' value={formik.values.phone} onChange={formik.handleChange} />
+                        
+                        <ButtonGroup display='flex' flexDirection='row' justifyContent='space-evenly' alignItems='center' my={10} variant='outline' >
+                            {types.map((type) => (
+                                <StyledButton active={active === type ? true : false } onClick={() => setActive(type)} key={type}>{type}</StyledButton>
+                            ))}
+                        </ButtonGroup>
 
-                    <FormLabel htmlFor="phone"></FormLabel>
-                    <Input id="phone" name="phone" type='text' {...getFieldProps('phone')} placeholder="Deine Handynummer" />
-                    {touched.phone && errors.phone ? (<FormErrorMessage>{errors.phone}</FormErrorMessage>) : undefined }
-
-                    <ButtonGroup role='group' display='flex' flexDirection='row' justifyContent='space-evenly' alignItems='center' my={10} variant='outline' >
-                        <Button colorScheme={useColorModeValue('teal', 'white' )} _hover={{backgroundColor: 'white', color: 'black'}} >Web Design</Button>
-                        <Button colorScheme={useColorModeValue('teal', 'white' )} _hover={{backgroundColor: 'white', color: 'black'}} >Web Development</Button>
-                        <Button colorScheme={useColorModeValue('teal', 'white' )} _hover={{backgroundColor: 'white', color: 'black'}} >Sonstiges</Button>
-                    </ButtonGroup>
-
-                    <FormLabel htmlFor="message"></FormLabel>
-                    <Textarea id="message" name="message" rows={5} type="text" {...getFieldProps('message')} placeholder="Deine Nachricht" />
-
-                    <Button type="submit" isLoading={isSubmitting} loadingText='Submitting' id="submitButton" colorScheme={'teal'}>Submit</Button>
-
-                </Box>
-            )}
-
+                        <FormLabel htmlFor='message' ></FormLabel>
+                        <Textarea rows={5} placeholder='Deine Nachricht' />        
+                        
+                    </FormControl>
+            
+                <Button as='button' type='submit' colorScheme='teal' my={6} >Submit</Button>
+            </Box>
+            )}      
         </Formik>
     )
 }
 
-export default ContactForm;
+export default Form;
