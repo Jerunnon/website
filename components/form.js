@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 
-import { Formik } from 'formik'
+import { Formik, Field } from 'formik'
 import * as Yup from 'yup'
 
 import {
@@ -9,8 +9,6 @@ import {
     Button,
     ButtonGroup,
     Box,
-    FormErrorMessage,
-    FormControl,
     Textarea
 } from '@chakra-ui/react'
 import { useState } from 'react'
@@ -24,6 +22,14 @@ const StyledButton = styled(Button) `
         `
     }
 `
+
+const ErrorMessage = styled.div`
+    color: #F56565;
+    padding: .5rem;
+    align-self: start;
+ `
+
+
 const Form = () => {
 
     const types = ["Web Design", "Web Development", "Sonstiges"]
@@ -36,6 +42,7 @@ const Form = () => {
                 name: '',
                 email: '',
                 phone: '',
+                option: '',
                 message: ''
             }}
             
@@ -47,10 +54,13 @@ const Form = () => {
                 email: Yup.string().email('Ungültiges Format')
                 .required('Required'),
                 phone: Yup.string(),
-                message: Yup.string().required('Required')
+                message: Yup.string()
                 .min(5, 'Mindestens 5 Zeichen eingeben!')
+                .required('Required')
             })}
             onSubmit={ async (values, actions) => {
+
+                console.log(values)
                 
                 await fetch('/api/contact', {
                   method: 'POST',
@@ -68,7 +78,7 @@ const Form = () => {
                 })
             }}
         >
-            {(formik) => (
+            {formik => (
                 <Box 
                     as='form' 
                     onSubmit={formik.handleSubmit}
@@ -78,29 +88,29 @@ const Form = () => {
                     justifyContent='center'
                     mt={150}
                 >
-                    <FormControl>
+                    
+                    <FormLabel htmlFor='name'></FormLabel>
+                    <Input variant='outline' size='lg' id='name' name='name' placeholder='Dein Name' type='text' value={formik.values.name} onChange={formik.handleChange}/>
+                    {formik.touched.name && formik.errors.name ? <ErrorMessage>{formik.errors.name}</ErrorMessage> : null}
 
-                        <FormLabel htmlFor='name'></FormLabel>
-                        <Input variant='outline' size='lg' id='name' name='name' placeholder='Dein Name' type='text' value={formik.values.name} onChange={formik.handleChange}/>
-                        {formik.touched.name && formik.errors.name ? <FormErrorMessage>{formik.errors.name}</FormErrorMessage> : null}
+                    <FormLabel htmlFor='email'></FormLabel>
+                    <Input variant='outline' size='lg' name='email' type='email' placeholder='Deine Email Adresse' value={formik.values.email} onChange={formik.handleChange} />
+                    {formik.touched.email && formik.errors.email ? <ErrorMessage>{formik.errors.email}</ErrorMessage> : null}
 
-                        <FormLabel htmlFor='email'></FormLabel>
-                        <Input variant='outline' size='lg' name='email' type='email' placeholder='Deine Email Adresse' value={formik.values.email} onChange={formik.handleChange} />
-                        {formik.touched.email && formik.errors.email ? <FormErrorMessage>{formik.errors.email}</FormErrorMessage> : null}
+                    <FormLabel htmlFor='phone'></FormLabel>
+                    <Input variant='outline' size='lg' name='phone' type='text' placeholder='Deine Handynummer' value={formik.values.phone} onChange={formik.handleChange} />
+                    
+                    <ButtonGroup display='flex' flexDirection='row' justifyContent='space-evenly' alignItems='center' my={10} variant='outline' >
+                        {types.map((type) => (
+                            <StyledButton active={active === type} onClick={() => {setActive(type), formik.values.option=type}} key={type}>{type}</StyledButton>
+                        ))}
+                    </ButtonGroup>
 
-                        <FormLabel htmlFor='phone'></FormLabel>
-                        <Input variant='outline' size='lg' name='phone' type='text' placeholder='Deine Handynummer' value={formik.values.phone} onChange={formik.handleChange} />
+                    <FormLabel htmlFor='message' ></FormLabel>
+                    <Field as={Textarea} rows={5} name='message' />
+                    {formik.touched.message && formik.errors.message ? <ErrorMessage>{formik.errors.message}</ErrorMessage> : null}    
                         
-                        <ButtonGroup display='flex' flexDirection='row' justifyContent='space-evenly' alignItems='center' my={10} variant='outline' >
-                            {types.map((type) => (
-                                <StyledButton active={active === type} onClick={() => setActive(type)} key={type}>{type}</StyledButton>
-                            ))}
-                        </ButtonGroup>
-
-                        <FormLabel htmlFor='message' ></FormLabel>
-                        <Textarea size='lg' rows={5} placeholder='Deine Nachricht' />        
-                        
-                    </FormControl>
+                    
             
                 <Button type='submit' isLoading={formik.isSubmitting} colorScheme='teal' my={6}>Submit</Button>
             </Box>
