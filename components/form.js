@@ -112,7 +112,7 @@ const Form = () => {
                         
                     
             
-                <Button type='submit' isLoading={formik.isSubmitting} colorScheme='teal' my={6}>Submit</Button>
+                <Button type='submit' isLoading={formik.isSubmitting} loadingText='Sende Mail' colorScheme='teal' my={6}>Submit</Button>
             </Box>
             )}      
         </Formik>
