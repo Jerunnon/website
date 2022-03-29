@@ -13,6 +13,8 @@ import {
 } from '@chakra-ui/react'
 import { useState } from 'react'
 
+import Section from './section'
+
 const StyledButton = styled(Button) `
     background: transparent;
     ${({active}) => 
@@ -79,41 +81,39 @@ const Form = () => {
             }}
         >
             {formik => (
-                <Box 
-                    as='form' 
-                    onSubmit={formik.handleSubmit}
-                    display='flex'
-                    flexDirection='column'
-                    alignItems='center'
-                    justifyContent='center'
-                    mt={150}
-                >
+                <Section delay={0.1}>
+                    <Box
+                        as='form'
+                        onSubmit={formik.handleSubmit}
+                        display='flex'
+                        flexDirection='column'
+                        alignItems='center'
+                        justifyContent='center'
+                        mt={150}
+                    >
                     
-                    <FormLabel htmlFor='name'></FormLabel>
-                    <Input variant='outline' size='lg' id='name' name='name' placeholder='Dein Name' type='text' value={formik.values.name} onChange={formik.handleChange}/>
-                    {formik.touched.name && formik.errors.name ? <ErrorMessage>{formik.errors.name}</ErrorMessage> : null}
-
-                    <FormLabel htmlFor='email'></FormLabel>
-                    <Input variant='outline' size='lg' name='email' type='email' placeholder='Deine Email Adresse' value={formik.values.email} onChange={formik.handleChange} />
-                    {formik.touched.email && formik.errors.email ? <ErrorMessage>{formik.errors.email}</ErrorMessage> : null}
-
-                    <FormLabel htmlFor='phone'></FormLabel>
-                    <Input variant='outline' size='lg' name='phone' type='text' placeholder='Deine Handynummer' value={formik.values.phone} onChange={formik.handleChange} />
+                        <FormLabel htmlFor='name'></FormLabel>
+                        <Input variant='outline' size='lg' id='name' name='name' placeholder='Dein Name' type='text' value={formik.values.name} onChange={formik.handleChange}/>
+                        {formik.touched.name && formik.errors.name ? <ErrorMessage>{formik.errors.name}</ErrorMessage> : null}
+                        <FormLabel htmlFor='email'></FormLabel>
+                        <Input variant='outline' size='lg' name='email' type='email' placeholder='Deine Email Adresse' value={formik.values.email} onChange={formik.handleChange} />
+                        {formik.touched.email && formik.errors.email ? <ErrorMessage>{formik.errors.email}</ErrorMessage> : null}
+                        <FormLabel htmlFor='phone'></FormLabel>
+                        <Input variant='outline' size='lg' name='phone' type='text' placeholder='Deine Handynummer' value={formik.values.phone} onChange={formik.handleChange} />
                     
-                    <ButtonGroup display='flex' flexDirection='row' justifyContent='space-evenly' alignItems='center' my={10} variant='outline' >
-                        {types.map((type) => (
-                            <StyledButton active={active === type} onClick={() => {setActive(type), formik.values.option=type}} key={type}>{type}</StyledButton>
-                        ))}
-                    </ButtonGroup>
-
-                    <FormLabel htmlFor='message' ></FormLabel>
-                    <Field as={Textarea} rows={5} name='message' />
-                    {formik.touched.message && formik.errors.message ? <ErrorMessage>{formik.errors.message}</ErrorMessage> : null}    
-                        
+                        <ButtonGroup display='flex' flexDirection='row' justifyContent='space-evenly' alignItems='center' my={10} variant='outline' >
+                            {types.map((type) => (
+                                <StyledButton active={active === type} onClick={() => {setActive(type), formik.values.option=type}} key={type}>{type}</StyledButton>
+                            ))}
+                        </ButtonGroup>
+                        <FormLabel htmlFor='message' ></FormLabel>
+                        <Field as={Textarea} rows={5} name='message' />
+                        {formik.touched.message && formik.errors.message ? <ErrorMessage>{formik.errors.message}</ErrorMessage> : null}
                     
-            
-                <Button type='submit' isLoading={formik.isSubmitting} loadingText='Sende Mail' colorScheme='teal' my={6}>Submit</Button>
-            </Box>
+                    
+                    <Button type='submit' isLoading={formik.isSubmitting} loadingText='Sende Mail' colorScheme='teal' my={6}>Submit</Button>
+                                </Box>
+                </Section>
             )}      
         </Formik>
     )
