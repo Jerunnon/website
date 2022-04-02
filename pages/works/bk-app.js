@@ -39,7 +39,7 @@ const Work = () => {
                     </ListItem>
                 </List>
 
-                <WorkImage src='/images/firstClient.jpeg' />7
+                <WorkImage src='/images/firstClient.jpeg' />
             </Container>
         </Layout>
     )
