@@ -73,9 +73,10 @@ const Home = () => {
           Work 💻
         </Heading>
         <Paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis, 
-          lectus magna fringilla urna, porttitor rhoncus dolor purus non enim praesent elementum facilisis leo, 
-          vel fringilla est ullamcorper eget nulla facilisi etiam dignissim diam quis enim lobortis scelerisque fermentum dui faucibus in ornare quam viverra
+        Simon ist ein fröhlicher, kreativer und hobbymäßiger Web Entwickler aus Bochum mit einer Leidenschaft für die Entwicklung von digitalen und kreativen Lösungen.
+        Er hat ein Händchen für alles, was mit der Einführung von Produkten zu tun hat, von der Planung und dem Design bis hin zur Lösung von realen Problemen mit Code. 
+        Wenn er nicht online ist, liebt er es ordentlich auf die Tasten zu hauen oder einfach mal die Seele beim Sport oder in der Natur baumeln zu lassen. 
+        Derzeit hat er einen Vollzeitjob bei der Telekom als Quality und Process Manager.
         </Paragraph>
       </Section>
 
@@ -104,6 +105,7 @@ const Home = () => {
         </BioSection>
         <BioSection>
           <BioYear>2019 bis heute</BioYear>
+          Hauptberuflich bei der Telekom als Process & Quality Manager.
           Nebentätigkeit als Webdesigner und Webdeveloper. Seit dem konnte ich meine Fähigkeiten ausweiten und verfeinern.
         </BioSection>
       </Section>
