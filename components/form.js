@@ -146,7 +146,7 @@ const Form = () => {
                 >
                   {types.map((type) => (
                     <StyledButton
-                      active={active === type}
+                      active={active === type ? true : false}
                       marginInlineStart="0px !important"
                       onClick={() => {
                         setActive(type), (formik.values.option = type);

@@ -29,7 +29,7 @@ const main = ({ children, router }) => {
                 <title>Simon Klein - Homepage</title>
             </Head>
 
-            <Navbar paht={router.path}/>
+            <Navbar path={router.path}/>
 
             <Container maxW='container.md' pt={14}>
                 <LazyRocketMan />

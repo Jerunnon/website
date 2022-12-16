@@ -12,8 +12,8 @@ function Posts({ articles }) {
                 <Heading as="h3" fontSize={20} mb={4}>neueste Posts</Heading>
                 {articles.map((article) => {
                     return (
-                        <Section delay={0.1} key={article.length}>
-                            <SimpleGrid columns={[1, 2, 2]} gap={6} key={article.id}>
+                        <Section delay={0.1} key={article.id}>
+                            <SimpleGrid columns={[1, 2, 2]} gap={6} key={article.id + article.length}>
                                 <GridItem key={article.title}
                                     title={article.title}
                                     thumbnail={article.cover_image}
