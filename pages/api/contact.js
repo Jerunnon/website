@@ -1,4 +1,4 @@
-export default function (req, res) {
+export default function sendMail(req, res) {
     require('dotenv').config()
     const nodemailer = require('nodemailer')
 

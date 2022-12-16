@@ -1,11 +1,10 @@
-import { useState } from 'react';
 import Form from '../components/form';
 
-function Contact() {
+const Contact = () => {
 
     return <Form />    
    
-}
+};
 
 export default Contact;
 export { getServerSideProps } from '../components/chakra'

@@ -12,14 +12,11 @@ import {
   Textarea,
   Image,
   Heading,
-  useColorModeValue,
   useColorMode,
 } from "@chakra-ui/react";
 import { useState } from "react";
 
 import Section from "./section";
-import LightIcon from "../public/images/sendedIcon_lightTheme.png";
-import DarkIcon from "../public/images/sendedIcon_darkTheme.png";
 
 const StyledButton = styled(Button)`
   background: transparent;
@@ -89,7 +86,7 @@ const Form = () => {
       >
         {(formik) => (
           <>
-            <Section delay={0.1}>
+            <Section delay={0.1} className="test">
               <Box
                 as="form"
                 onSubmit={formik.handleSubmit}
@@ -98,6 +95,7 @@ const Form = () => {
                 justifyContent="center"
                 mt={150}
                 display={!sended ? "flex" : "none"}
+                className="test"
               >
                 <FormLabel htmlFor="name"></FormLabel>
                 <Input
@@ -139,15 +137,17 @@ const Form = () => {
 
                 <ButtonGroup
                   display="flex"
-                  flexDirection="row"
-                  justifyContent="space-evenly"
-                  alignItems="center"
+                  flexDirection={{base: "column", sm: "row"}}
+                  justifyContent="center"
+                  gap="10px"
                   my={10}
                   variant="outline"
+                  width={{base: "100%", md: "unset"}}
                 >
                   {types.map((type) => (
                     <StyledButton
                       active={active === type}
+                      marginInlineStart="0px !important"
                       onClick={() => {
                         setActive(type), (formik.values.option = type);
                       }}
@@ -158,7 +158,7 @@ const Form = () => {
                   ))}
                 </ButtonGroup>
                 <FormLabel htmlFor="message"></FormLabel>
-                <Field as={Textarea} rows={5} name="message" />
+                <Field as={Textarea} rows={5} name="message" placeholder="Deine Nachricht"/>
                 {formik.touched.message && formik.errors.message ? (
                   <ErrorMessage>{formik.errors.message}</ErrorMessage>
                 ) : null}
@@ -180,7 +180,7 @@ const Form = () => {
 
       <Section delay={0.1}>
         <Box visibility={sended ? "visible" : "hidden"} mt='9rem' display='flex' flexDirection='column' alignItems='center' >
-          {cm.colorMode === 'dark' ? <Image src='/images/sendedIcon_darkTheme.png' /> : <Image src='/images/sendedIcon_lightTheme.png' />}
+          {cm.colorMode === 'dark' ? <Image src='/images/sendedIcon_darkTheme.png' alt="letter icon with check" /> : <Image src='/images/sendedIcon_lightTheme.png' alt="letter icon with check"/>}
           <Heading as="h1">Ihre Mail wurde erfolgreich versendet</Heading>
           <p>Ich werde mich so schnell wie möglich um ihre Anfrage kümmern!</p>
         </Box>

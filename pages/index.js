@@ -104,9 +104,13 @@ const Home = () => {
           abgeschlossenes dualen Bachelorstudium in Wirtschaftsinformatik bei der deutschen Telekom AG und anschließende Übernahme.
         </BioSection>
         <BioSection>
-          <BioYear>2019 bis heute</BioYear>
+          <BioYear>2019 bis 2022</BioYear>
           Hauptberuflich bei der Telekom als Process & Quality Manager.
-          Nebentätigkeit als Webdesigner und Webdeveloper. Seit dem konnte ich meine Fähigkeiten ausweiten und verfeinern.
+        </BioSection>
+        <BioSection>
+          <BioYear>2022 bis heute</BioYear>
+          Hauptberuflich bei der CGI als WebEntwickler tätig.
+          Nebentätigkeit als hobby Webdesigner und Webdeveloper. Seit dem konnte ich meine Fähigkeiten ausweiten und verfeinern.
         </BioSection>
       </Section>
 
