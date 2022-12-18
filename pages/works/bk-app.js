@@ -19,7 +19,7 @@ const Work = () => {
                 <List ml={4} my ={4}>
                     <ListItem>
                         <Meta>Website</Meta>
-                        <Link href='https://bk-app-4a16f.web.app'>
+                        <Link href='https://bk-app-4a16f.web.app' target="_blank">
                         https://bk-app-4a16f.web.app <ExternalLinkIcon mx='2px' />
                         </Link>
                     </ListItem>
@@ -33,7 +33,7 @@ const Work = () => {
                     </ListItem>
                     <ListItem>
                         <Meta>Blogpost</Meta>
-                        <Link href='https://dev.to/simonklein/my-first-big-project-my-advice-for-beginners-55d3'>
+                        <Link href='https://dev.to/simonklein/my-first-big-project-my-advice-for-beginners-55d3' target="_blank">
                             Was ich durch meinem erstes großes Projekt gelernt habe! <ExternalLinkIcon mx='2px' />
                         </Link>
                     </ListItem>
