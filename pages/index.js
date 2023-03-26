@@ -76,7 +76,7 @@ const Home = () => {
         Simon ist ein fröhlicher, kreativer und hobbymäßiger Web Entwickler aus Bochum mit einer Leidenschaft für die Entwicklung von digitalen und kreativen Lösungen.
         Er hat ein Händchen für alles, was mit der Einführung von Produkten zu tun hat, von der Planung und dem Design bis hin zur Lösung von realen Problemen mit Code. 
         Wenn er nicht online ist, liebt er es ordentlich auf die Tasten zu hauen oder einfach mal die Seele beim Sport oder in der Natur baumeln zu lassen. 
-        Derzeit hat er einen Vollzeitjob bei der Telekom als Quality und Process Manager.
+        Derzeit hat er einen Vollzeitjob bei der CGI Deutschland B.V. & Co. KG als Web Entwickler.
         </Paragraph>
       </Section>
 
