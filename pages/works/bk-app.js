@@ -10,10 +10,10 @@ const Work = () => {
         <Layout title='bk-app'>
             <Container>
                 <Title>
-                    Bruno&Katia | Gaststätte <Badge>2021-</Badge>
+                    Fresh&Tasty | Restaurant <Badge>2021-</Badge>
                 </Title>
                 <Paragraph>
-                    Eine Website für meine Mutter und ihren Mann, die in Regensburg eine Gaststätte betreiben. 
+                    Eine Beispielhafte Website für ein Restaurant. 
                     Das Projekt beinhaltet auch ein Headless CMS
                 </Paragraph>
                 <List ml={4} my ={4}>

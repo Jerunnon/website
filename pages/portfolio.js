@@ -11,17 +11,15 @@ const Portfolio = () => (
             <Heading as='h3' fontSize={20} mb={4}>Portfolio</Heading>
             <SimpleGrid columns={[1, 1, 2]} gap={6} >
                 <Section>
-                    <WorkGridItem id='bk-app' title='BK-App' thumbnail={bkApp} >
-                        Eine Website für das Restaurant meiner Mutter und ihren Mann. 
+                    <WorkGridItem id='bk-app' title='Fresh&Tasty' thumbnail={bkApp} >
+                        Eine Beispielhafte Website für ein Restaurant 
                         In Verbindung mit einem Headless CMS.
                     </WorkGridItem>
                 </Section>
-
-                
             </SimpleGrid>
         </Container>
     </Layout>
 );
 
 export default Portfolio;
-export { getServerSideProps } from '../components/chakra'
+export { getServerSideProps } from '../components/chakra'

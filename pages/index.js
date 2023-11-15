@@ -10,7 +10,6 @@ import { GridItem } from '../components/gridItem';
 import Section  from '../components/section'
 import Paragraph from '../components/paragraph'
 import { BioSection, BioYear } from '../components/bio';
-import thumbYoutube from '../public/images/space.jpg';
 import thumbClient from '../public/images/firstClient.jpeg';
 
 
@@ -76,7 +75,7 @@ const Home = () => {
         Simon ist ein fröhlicher, kreativer und hobbymäßiger Web Entwickler aus Bochum mit einer Leidenschaft für die Entwicklung von digitalen und kreativen Lösungen.
         Er hat ein Händchen für alles, was mit der Einführung von Produkten zu tun hat, von der Planung und dem Design bis hin zur Lösung von realen Problemen mit Code. 
         Wenn er nicht online ist, liebt er es ordentlich auf die Tasten zu hauen oder einfach mal die Seele beim Sport oder in der Natur baumeln zu lassen. 
-        Derzeit hat er einen Vollzeitjob bei der CGI Deutschland B.V. & Co. KG als Web Entwickler.
+        Derzeit hat er einen Vollzeitjob bei der CGI Deutschland B.V. & Co. KG als Software Entwickler.
         </Paragraph>
       </Section>
 
@@ -109,7 +108,7 @@ const Home = () => {
         </BioSection>
         <BioSection>
           <BioYear>2022 bis heute</BioYear>
-          Hauptberuflich bei der CGI als WebEntwickler tätig.
+          Hauptberuflich bei der CGI als Software-Entwickler tätig.
           Nebentätigkeit als hobby Webdesigner und Webdeveloper. Seit dem konnte ich meine Fähigkeiten ausweiten und verfeinern.
         </BioSection>
       </Section>
@@ -154,18 +153,18 @@ const Home = () => {
 
         <SimpleGrid columns={[1, 2, 2]} gap={6} >
           <GridItem
-            href="https://youtube.com"
-            title='rocket-belt design'
-            thumbnail={thumbYoutube}
+            href="https://bk-app-4a16f.web.app"
+            title='Restaurant Web Application'
+            thumbnail={thumbClient}
           >
-            Youtube Channel
+          Beispiel für eine Restaurant Web-Applikation
           </GridItem>
           <GridItem
             href="https://bk-app-4a16f.web.app"
-            title='Bruno&Katia Restaurant'
+            title='Restaurant CMS'
             thumbnail={thumbClient}
           >
-          Homepage für ersten Clienten
+          CMS für Restaurant Web-Applikation
           </GridItem>
         </SimpleGrid>
 
@@ -177,9 +176,6 @@ const Home = () => {
             </NextLink>
         </Box>
       </Section>
-
-      
-
       </Container>
     </Layout>
   )
